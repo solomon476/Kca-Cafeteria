@@ -1,5 +1,6 @@
 // Screen Elements
 const loginScreen = document.getElementById('login-screen');
+const signupScreen = document.getElementById('signup-screen');
 const studentMenu = document.getElementById('student-menu');
 const kitchenDashboard = document.getElementById('kitchen-dashboard');
 const paymentModal = document.getElementById('payment-modal');
@@ -13,7 +14,20 @@ document.getElementById('login-btn').addEventListener('click', () => {
 
 document.getElementById('signup-link').addEventListener('click', (e) => {
     e.preventDefault();
-    alert("Sign up functionality coming soon!");
+    loginScreen.style.display = 'none';
+    signupScreen.style.display = 'flex';
+});
+
+document.getElementById('back-to-login-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    signupScreen.style.display = 'none';
+    loginScreen.style.display = 'flex';
+});
+
+document.getElementById('create-account-btn').addEventListener('click', () => {
+    // Basic transition for prototype
+    signupScreen.style.display = 'none';
+    studentMenu.style.display = 'flex';
 });
 
 // --- Cart Logic ---
