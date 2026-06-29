@@ -89,7 +89,7 @@
                     <div class="food-info">
                         <h3>Chicken & Rice</h3>
                         <p class="price">KES 150</p>
-                        <button class="btn-add" onclick="addToCart(150)">+ Add</button>
+                        <button class="btn-add" onclick="addToCart('Chicken & Rice', 150)">+ Add</button>
                     </div>
                 </div>
                 <!-- Card 2 -->
@@ -98,7 +98,7 @@
                     <div class="food-info">
                         <h3>Fresh Juice</h3>
                         <p class="price">KES 80</p>
-                        <button class="btn-add" onclick="addToCart(80)">+ Add</button>
+                        <button class="btn-add" onclick="addToCart('Fresh Juice', 80)">+ Add</button>
                     </div>
                 </div>
                 <!-- Card 3 -->
@@ -107,7 +107,7 @@
                     <div class="food-info">
                         <h3>Beef Burger</h3>
                         <p class="price">KES 200</p>
-                        <button class="btn-add" onclick="addToCart(200)">+ Add</button>
+                        <button class="btn-add" onclick="addToCart('Beef Burger', 200)">+ Add</button>
                     </div>
                 </div>
                 <!-- Card 4 -->
@@ -116,7 +116,7 @@
                     <div class="food-info">
                         <h3>Coffee</h3>
                         <p class="price">KES 50</p>
-                        <button class="btn-add" onclick="addToCart(50)">+ Add</button>
+                        <button class="btn-add" onclick="addToCart('Coffee', 50)">+ Add</button>
                     </div>
                 </div>
                 <!-- Card 5 -->
@@ -125,7 +125,7 @@
                     <div class="food-info">
                         <h3>Pancakes</h3>
                         <p class="price">KES 100</p>
-                        <button class="btn-add" onclick="addToCart(100)">+ Add</button>
+                        <button class="btn-add" onclick="addToCart('Pancakes', 100)">+ Add</button>
                     </div>
                 </div>
                 <!-- Card 6 -->
@@ -134,7 +134,7 @@
                     <div class="food-info">
                         <h3>Fries</h3>
                         <p class="price">KES 120</p>
-                        <button class="btn-add" onclick="addToCart(120)">+ Add</button>
+                        <button class="btn-add" onclick="addToCart('Fries', 120)">+ Add</button>
                     </div>
                 </div>
                 <!-- Card 7 -->
@@ -143,7 +143,7 @@
                     <div class="food-info">
                         <h3>Eggs & Toast</h3>
                         <p class="price">KES 150</p>
-                        <button class="btn-add" onclick="addToCart(150)">+ Add</button>
+                        <button class="btn-add" onclick="addToCart('Eggs & Toast', 150)">+ Add</button>
                     </div>
                 </div>
                 <!-- Card 8 -->
@@ -152,7 +152,43 @@
                     <div class="food-info">
                         <h3>Soda</h3>
                         <p class="price">KES 60</p>
-                        <button class="btn-add" onclick="addToCart(60)">+ Add</button>
+                        <button class="btn-add" onclick="addToCart('Soda', 60)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 9 (New) -->
+                <div class="food-card" data-category="breakfast">
+                    <div class="food-img placeholder-img" style="font-size: 1rem; color: #888; background: #eee;">[ Image Soon ]</div>
+                    <div class="food-info">
+                        <h3>Samosas (2 pcs)</h3>
+                        <p class="price">KES 50</p>
+                        <button class="btn-add" onclick="addToCart('Samosas', 50)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 10 (New) -->
+                <div class="food-card" data-category="breakfast">
+                    <div class="food-img placeholder-img" style="font-size: 1rem; color: #888; background: #eee;">[ Image Soon ]</div>
+                    <div class="food-info">
+                        <h3>Sausage (1 pc)</h3>
+                        <p class="price">KES 40</p>
+                        <button class="btn-add" onclick="addToCart('Sausage', 40)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 11 (New) -->
+                <div class="food-card" data-category="lunch">
+                    <div class="food-img placeholder-img" style="font-size: 1rem; color: #888; background: #eee;">[ Image Soon ]</div>
+                    <div class="food-info">
+                        <h3>Chapati & Beans</h3>
+                        <p class="price">KES 120</p>
+                        <button class="btn-add" onclick="addToCart('Chapati & Beans', 120)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 12 (New) -->
+                <div class="food-card" data-category="drinks">
+                    <div class="food-img placeholder-img" style="font-size: 1rem; color: #888; background: #eee;">[ Image Soon ]</div>
+                    <div class="food-info">
+                        <h3>Bottled Water</h3>
+                        <p class="price">KES 40</p>
+                        <button class="btn-add" onclick="addToCart('Bottled Water', 40)">+ Add</button>
                     </div>
                 </div>
             </div>
@@ -250,12 +286,22 @@
             </div>
         </div>
 
-        <!-- Payment Modal -->
-        <div id="payment-modal" class="modal">
-            <div class="modal-content">
+        <!-- Receipt Modal -->
+        <div id="receipt-modal" class="modal">
+            <div class="modal-content receipt-content">
                 <div class="success-icon">✓</div>
                 <h3>Payment Successful</h3>
-                <p>Your order has been sent to the kitchen!</p>
+                <div class="receipt-body">
+                    <h4>KCA Cafe Receipt</h4>
+                    <ul id="receipt-items-list" class="receipt-items">
+                        <!-- dynamic items -->
+                    </ul>
+                    <div class="receipt-total">
+                        Total Paid: <strong>KES <span id="receipt-total-amount">0</span></strong>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; text-align: center;">Your order has been sent to the kitchen!</p>
+                <button id="close-receipt-btn" class="btn-primary" style="margin-top: 1rem;">Done</button>
             </div>
         </div>
 

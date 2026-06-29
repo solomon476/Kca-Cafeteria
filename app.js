@@ -3,7 +3,7 @@ const loginScreen = document.getElementById('login-screen');
 const signupScreen = document.getElementById('signup-screen');
 const studentMenu = document.getElementById('student-menu');
 const kitchenDashboard = document.getElementById('kitchen-dashboard');
-const paymentModal = document.getElementById('payment-modal');
+const receiptModal = document.getElementById('receipt-modal');
 const mpesaModal = document.getElementById('mpesa-modal');
 const mpesaAmount = document.getElementById('mpesa-amount');
 const mpesaFormSection = document.getElementById('mpesa-form-section');
@@ -53,11 +53,18 @@ document.getElementById('create-account-btn').addEventListener('click', () => {
 // --- Cart Logic ---
 let cartTotal = 0;
 let cartItemsCount = 0;
+let cartItems = {};
 
-function addToCart(price) {
+function addToCart(name, price) {
     cartTotal += price;
     cartItemsCount++;
     
+    if (cartItems[name]) {
+        cartItems[name].count++;
+    } else {
+        cartItems[name] = { price: price, count: 1 };
+    }
+
     // Update UI
     document.getElementById('cart-total-amount').innerText = cartTotal;
     document.getElementById('cart-badge').innerText = cartItemsCount;
@@ -103,23 +110,32 @@ document.getElementById('mpesa-pay-btn').addEventListener('click', () => {
     setTimeout(() => {
         mpesaModal.style.display = 'none';
         
-        // Show success modal
-        paymentModal.style.display = 'flex';
-
-        // Wait, then go to kitchen dashboard
-        setTimeout(() => {
-            paymentModal.style.display = 'none';
-            studentMenu.style.display = 'none';
-            kitchenDashboard.style.display = 'flex';
-            
-            // Reset cart
-            cartTotal = 0;
-            cartItemsCount = 0;
-            document.getElementById('cart-total-amount').innerText = cartTotal;
-            document.getElementById('cart-badge').innerText = cartItemsCount;
-        }, 2000);
-
+        // Populate and show receipt modal
+        const receiptList = document.getElementById('receipt-items-list');
+        receiptList.innerHTML = '';
+        for (let itemName in cartItems) {
+            let item = cartItems[itemName];
+            let li = document.createElement('li');
+            li.innerHTML = `<span>${item.count}x ${itemName}</span> <span>KES ${item.price * item.count}</span>`;
+            receiptList.appendChild(li);
+        }
+        document.getElementById('receipt-total-amount').innerText = cartTotal;
+        
+        receiptModal.style.display = 'flex';
     }, 4000); // 4 seconds simulated delay
+});
+
+document.getElementById('close-receipt-btn').addEventListener('click', () => {
+    receiptModal.style.display = 'none';
+    studentMenu.style.display = 'none';
+    kitchenDashboard.style.display = 'flex';
+    
+    // Reset cart
+    cartTotal = 0;
+    cartItemsCount = 0;
+    cartItems = {};
+    document.getElementById('cart-total-amount').innerText = cartTotal;
+    document.getElementById('cart-badge').innerText = cartItemsCount;
 });
 
 // --- Kitchen Dashboard Logic ---

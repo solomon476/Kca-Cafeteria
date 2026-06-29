@@ -311,6 +311,7 @@ body {
 
 .food-info {
     padding: 0.8rem;
+    padding-bottom: 1rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -331,6 +332,7 @@ body {
 
 .btn-add {
     margin-top: auto;
+    margin-bottom: 0.2rem;
     padding: 0.7rem; /* Larger tap target for mobile */
     background-color: var(--white);
     border: 1px solid var(--primary-color);
@@ -557,6 +559,58 @@ body {
 .modal-content p {
     color: var(--text-light);
     font-size: 0.9rem;
+}
+
+/* ==================================
+   RECEIPT MODAL
+   ================================== */
+.receipt-content {
+    text-align: left;
+}
+
+.receipt-content h3, .receipt-content .success-icon {
+    text-align: center;
+}
+
+.receipt-body {
+    background: #fdfdfd;
+    border: 1px dashed #ccc;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+}
+
+.receipt-body h4 {
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.receipt-items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    color: #555;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.receipt-items li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+.receipt-total {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    padding-top: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-color);
 }
 
 /* ==================================
