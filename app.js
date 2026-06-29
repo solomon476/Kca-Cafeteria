@@ -139,21 +139,6 @@ document.getElementById('close-receipt-btn').addEventListener('click', () => {
 });
 
 // --- Kitchen Dashboard Logic ---
-document.getElementById('toggle-orders').addEventListener('click', (e) => {
-    document.getElementById('live-orders-section').style.display = 'block';
-    document.getElementById('inventory-section').style.display = 'none';
-    
-    document.getElementById('toggle-orders').classList.add('active');
-    document.getElementById('toggle-inventory').classList.remove('active');
-});
-
-document.getElementById('toggle-inventory').addEventListener('click', (e) => {
-    document.getElementById('live-orders-section').style.display = 'none';
-    document.getElementById('inventory-section').style.display = 'block';
-    
-    document.getElementById('toggle-inventory').classList.add('active');
-    document.getElementById('toggle-orders').classList.remove('active');
-});
 
 function toggleOrderStatus(btn) {
     if (btn.classList.contains('status-preparing')) {

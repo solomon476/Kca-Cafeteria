@@ -80,6 +80,7 @@
                 <button class="pill" data-filter="breakfast">Breakfast</button>
                 <button class="pill" data-filter="lunch">Lunch</button>
                 <button class="pill" data-filter="drinks">Drinks</button>
+                <button class="pill" data-filter="fruits">Fruits</button>
             </div>
 
             <div class="food-grid">
@@ -183,7 +184,7 @@
                     </div>
                 </div>
                 <!-- Card 12 -->
-                <div class="food-card" data-category="breakfast">
+                <div class="food-card" data-category="fruits">
                     <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=500&q=60" alt="Fruit Bowl" class="food-img">
                     <div class="food-info">
                         <h3>Fruit Bowl</h3>
@@ -193,11 +194,20 @@
                 </div>
                 <!-- Card 13 -->
                 <div class="food-card" data-category="lunch">
-                    <img src="https://images.unsplash.com/photo-1612929633738-8fe01f7c845f?auto=format&fit=crop&w=500&q=60" alt="Indomie Noodles" class="food-img">
+                    <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=500&q=60" alt="Indomie Noodles" class="food-img">
                     <div class="food-info">
                         <h3>Indomie Noodles</h3>
                         <p class="price">KES 80</p>
                         <button class="btn-add" onclick="addToCart('Indomie Noodles', 80)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 14 -->
+                <div class="food-card" data-category="fruits">
+                    <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=500&q=60" alt="Lemon Juice" class="food-img">
+                    <div class="food-info">
+                        <h3>Lemon Juice</h3>
+                        <p class="price">KES 80</p>
+                        <button class="btn-add" onclick="addToCart('Lemon Juice', 80)">+ Add</button>
                     </div>
                 </div>
             </div>
@@ -215,9 +225,8 @@
                 <button class="btn-logout" id="logout-btn">Exit</button>
             </header>
 
-            <div class="dashboard-toggle">
-                <button id="toggle-orders" class="toggle-btn active">Live Orders</button>
-                <button id="toggle-inventory" class="toggle-btn">Inventory</button>
+            <div style="padding: 1.5rem 1.5rem 0.5rem; background: var(--white); border-bottom: 1px solid #eee;">
+                <h3 style="color: var(--primary-color);">Live Orders</h3>
             </div>
 
             <!-- Live Orders Section -->
@@ -240,38 +249,7 @@
                 </div>
             </div>
 
-            <!-- Inventory Section -->
-            <div id="inventory-section" class="dashboard-section" style="display: none;">
-                <table class="inventory-table">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Stock Level</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Rice (kg)</td>
-                            <td>45</td>
-                        </tr>
-                        <tr class="low-stock">
-                            <td>Chicken (units)</td>
-                            <td><span class="warning-text">8 ⚠️</span></td>
-                        </tr>
-                        <tr>
-                            <td>Juice (L)</td>
-                            <td>20</td>
-                        </tr>
-                        <tr>
-                            <td>Burger Buns</td>
-                            <td>32</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="inventory-alert">
-                    ⚠️ Chicken stock is critically low. Restock immediately to avoid menu out-of-stock.
-                </div>
-            </div>
+
         </div>
 
         <!-- M-Pesa Payment Modal -->
