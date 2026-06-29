@@ -31,7 +31,7 @@ body {
     max-width: 400px;
     height: 100vh;
     max-height: 850px;
-    overflow: hidden; /* Hide outer scroll, handle internally */
+    overflow: hidden; /* Hide outer scroll, handle internally on mobile */
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -40,11 +40,22 @@ body {
 
 /* Allow it to expand on larger screens */
 @media (min-width: 768px) {
+    body {
+        align-items: flex-start; /* Allow normal scrolling from top */
+        padding: 2rem 0;
+    }
     #app-container {
         max-width: 800px;
-        height: 90vh;
+        height: auto;
+        min-height: 90vh;
+        max-height: none; /* remove mobile max height */
         border-radius: 24px;
         border: none;
+        overflow: visible; /* Let whole page scroll */
+    }
+    .screen {
+        height: auto;
+        min-height: 100%;
     }
 }
 
@@ -287,6 +298,7 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     display: flex;
     flex-direction: column;
+    min-height: 280px; /* Guarantee enough height for image and text so button never cuts */
     transition: var(--transition);
 }
 
@@ -310,11 +322,11 @@ body {
 }
 
 .food-info {
-    padding: 0.8rem;
-    padding-bottom: 1rem;
+    padding: 1.2rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    justify-content: space-between;
 }
 
 .food-info h3 {
@@ -331,9 +343,8 @@ body {
 }
 
 .btn-add {
-    margin-top: auto;
-    margin-bottom: 0.2rem;
-    padding: 0.7rem; /* Larger tap target for mobile */
+    margin-top: 1rem; /* push down below price */
+    padding: 0.8rem; /* nice large tap target */
     background-color: var(--white);
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
@@ -687,14 +698,25 @@ body {
     .food-grid {
         grid-template-columns: repeat(3, 1fr);
         padding: 0 2rem 6rem;
+        overflow-y: visible; /* scroll naturally with the page */
     }
     
     .app-header {
         padding: 2rem 2rem 1.5rem;
+        border-radius: 24px 24px 0 0;
     }
     
     .categories-scroll {
         padding: 1rem 2rem;
+    }
+
+    .sticky-cart {
+        position: sticky;
+        bottom: 2rem;
+        margin: 0 2rem;
+        width: calc(100% - 4rem);
+        border-radius: 12px;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
     }
 }
 
