@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCA Cafeteria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        
+        <!-- Screen 1: Authentication -->
+        <div id="login-screen" class="screen">
+            <div class="login-content">
+                <div class="logo">
+                    <h1>KCA Cafe</h1>
+                    <p>Good food, fast.</p>
+                </div>
+                <div class="input-group">
+                    <label for="student-id">Student ID</label>
+                    <input type="text" id="student-id" placeholder="e.g. KCA/1234/23">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••">
+                </div>
+                <button id="login-btn" class="btn-primary">Login</button>
+                <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+            </div>
+        </div>
+
+        <!-- Screen 2: Student Menu -->
+        <div id="student-menu" class="screen" style="display: none;">
+            <header class="app-header">
+                <h2>KCA Cafeteria</h2>
+                <div class="cart-icon">
+                    🛒
+                    <span id="cart-badge" class="badge">0</span>
+                </div>
+            </header>
+            
+            <div class="categories-scroll">
+                <button class="pill active">All</button>
+                <button class="pill">Breakfast</button>
+                <button class="pill">Lunch</button>
+                <button class="pill">Drinks</button>
+            </div>
+
+            <div class="food-grid">
+                <!-- Card 1 -->
+                <div class="food-card">
+                    <img src="images/chicken_and_rice.png" alt="Chicken & Rice" class="food-img">
+                    <div class="food-info">
+                        <h3>Chicken & Rice</h3>
+                        <p class="price">KES 150</p>
+                        <button class="btn-add" onclick="addToCart(150)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="food-card">
+                    <img src="images/fresh_juice.png" alt="Fresh Juice" class="food-img">
+                    <div class="food-info">
+                        <h3>Fresh Juice</h3>
+                        <p class="price">KES 80</p>
+                        <button class="btn-add" onclick="addToCart(80)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="food-card">
+                    <div class="food-img placeholder-img">🍔</div>
+                    <div class="food-info">
+                        <h3>Beef Burger</h3>
+                        <p class="price">KES 200</p>
+                        <button class="btn-add" onclick="addToCart(200)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="food-card">
+                    <div class="food-img placeholder-img">☕</div>
+                    <div class="food-info">
+                        <h3>Coffee</h3>
+                        <p class="price">KES 50</p>
+                        <button class="btn-add" onclick="addToCart(50)">+ Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky-cart">
+                <div class="cart-total">Total: KES <span id="cart-total-amount">0</span></div>
+                <button id="checkout-btn" class="btn-primary">Checkout & Pay</button>
+            </div>
+        </div>
+
+        <!-- Screen 3: Kitchen Dashboard -->
+        <div id="kitchen-dashboard" class="screen" style="display: none;">
+            <header class="app-header">
+                <h2>Kitchen Dashboard</h2>
+                <button class="btn-logout" id="logout-btn">Exit</button>
+            </header>
+
+            <div class="dashboard-toggle">
+                <button id="toggle-orders" class="toggle-btn active">Live Orders</button>
+                <button id="toggle-inventory" class="toggle-btn">Inventory</button>
+            </div>
+
+            <!-- Live Orders Section -->
+            <div id="live-orders-section" class="dashboard-section">
+                <div class="order-card">
+                    <div class="order-header">
+                        <h4>Order #1042</h4>
+                        <span class="customer-name">John D.</span>
+                    </div>
+                    <p class="order-details">2x Chicken & Rice, 1x Fresh Juice</p>
+                    <button class="btn-status status-preparing" onclick="toggleOrderStatus(this)">Preparing</button>
+                </div>
+                <div class="order-card">
+                    <div class="order-header">
+                        <h4>Order #1043</h4>
+                        <span class="customer-name">Sarah M.</span>
+                    </div>
+                    <p class="order-details">1x Beef Burger, 1x Coffee</p>
+                    <button class="btn-status status-preparing" onclick="toggleOrderStatus(this)">Preparing</button>
+                </div>
+            </div>
+
+            <!-- Inventory Section -->
+            <div id="inventory-section" class="dashboard-section" style="display: none;">
+                <table class="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Stock Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rice (kg)</td>
+                            <td>45</td>
+                        </tr>
+                        <tr class="low-stock">
+                            <td>Chicken (units)</td>
+                            <td><span class="warning-text">8 ⚠️</span></td>
+                        </tr>
+                        <tr>
+                            <td>Juice (L)</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Burger Buns</td>
+                            <td>32</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="inventory-alert">
+                    ⚠️ Chicken stock is critically low. Restock immediately to avoid menu out-of-stock.
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div id="payment-modal" class="modal">
+            <div class="modal-content">
+                <div class="success-icon">✓</div>
+                <h3>Payment Successful</h3>
+                <p>Your order has been sent to the kitchen!</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

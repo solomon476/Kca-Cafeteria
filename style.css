@@ -1,0 +1,504 @@
+:root {
+    --primary-color: #D2691E; /* Burnt Orange / Terracotta */
+    --secondary-color: #8B4513; /* Warm Brown */
+    --bg-color: #FDFBF7; /* Off-white / Light Beige */
+    --text-color: #333333;
+    --text-light: #777777;
+    --white: #FFFFFF;
+    --border-radius: 12px;
+    --transition: 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #E0E0E0; /* Darker background outside the phone frame */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+#app-container {
+    background-color: var(--bg-color);
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    max-height: 850px;
+    overflow: hidden; /* Hide outer scroll, handle internally */
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Add a rounded border if viewed on desktop to look like a phone */
+@media (min-width: 450px) {
+    #app-container {
+        height: 90vh;
+        border-radius: 24px;
+        border: 8px solid #222;
+    }
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================================
+   SCREEN 1: AUTHENTICATION
+   ================================== */
+#login-screen {
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--bg-color) 60%, #fae8dc 100%);
+}
+
+.login-content {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.logo h1 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.logo p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(210, 105, 30, 0.1);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background-color: #B55815;
+    transform: translateY(-2px);
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.signup-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ==================================
+   SCREEN 2: STUDENT MENU
+   ================================== */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 1rem;
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    z-index: 10;
+}
+
+.app-header h2 {
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+}
+
+.cart-icon {
+    font-size: 1.5rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.categories-scroll {
+    display: flex;
+    gap: 0.8rem;
+    padding: 1rem 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+}
+
+.categories-scroll::-webkit-scrollbar {
+    display: none; /* Chrome */
+}
+
+.pill {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background: var(--white);
+    color: var(--text-color);
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+.pill.active {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border-color: var(--secondary-color);
+}
+
+.food-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 0 1.5rem 6rem; /* Bottom padding for sticky cart */
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.food-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+
+.food-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+}
+
+.food-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.placeholder-img {
+    background-color: #f0e6e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
+
+.food-info {
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.food-info h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+    color: var(--secondary-color);
+}
+
+.price {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+
+.btn-add {
+    margin-top: auto;
+    padding: 0.5rem;
+    background-color: var(--white);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.sticky-cart {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    padding: 1.2rem 1.5rem;
+    border-top: 1px solid #eee;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
+}
+
+.cart-total {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+.sticky-cart .btn-primary {
+    width: auto;
+    padding: 0.8rem 1.5rem;
+}
+
+/* ==================================
+   SCREEN 3: KITCHEN DASHBOARD
+   ================================== */
+.btn-logout {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.dashboard-toggle {
+    display: flex;
+    padding: 1rem 1.5rem;
+    background: var(--white);
+    border-bottom: 1px solid #eee;
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 0.8rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toggle-btn.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.dashboard-section {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.order-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    border-left: 4px solid var(--primary-color);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.order-header h4 {
+    color: var(--secondary-color);
+}
+
+.customer-name {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.order-details {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    color: #444;
+}
+
+.btn-status {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.status-preparing {
+    background-color: #ffecd9;
+    color: var(--primary-color);
+}
+
+.status-ready {
+    background-color: #e6f7eb;
+    color: #2e8b57;
+}
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.inventory-table th, .inventory-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.inventory-table th {
+    background-color: #faf8f5;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.low-stock {
+    background-color: #fff5f5;
+}
+
+.warning-text {
+    color: #d32f2f;
+    font-weight: 700;
+}
+
+.inventory-alert {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #fff5f5;
+    border-left: 4px solid #d32f2f;
+    color: #d32f2f;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* ==================================
+   MODAL
+   ================================== */
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    width: 85%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.success-icon {
+    width: 60px;
+    height: 60px;
+    background-color: #e6f7eb;
+    color: #2e8b57;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    margin: 0 auto 1.5rem;
+}
+
+.modal-content h3 {
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+}
+
+.modal-content p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
