@@ -11,6 +11,11 @@ document.getElementById('login-btn').addEventListener('click', () => {
     studentMenu.style.display = 'flex';
 });
 
+document.getElementById('signup-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    alert("Sign up functionality coming soon!");
+});
+
 // --- Cart Logic ---
 let cartTotal = 0;
 let cartItemsCount = 0;
