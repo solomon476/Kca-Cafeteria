@@ -272,7 +272,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    padding: 0 1.5rem 6rem; /* Bottom padding for sticky cart */
+    padding: 0 1.5rem 8rem; /* Increased bottom padding for sticky cart */
     overflow-y: auto;
     flex-grow: 1;
 }
@@ -328,7 +328,7 @@ body {
 
 .btn-add {
     margin-top: auto;
-    padding: 0.5rem;
+    padding: 0.7rem; /* Larger tap target for mobile */
     background-color: var(--white);
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
