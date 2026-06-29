@@ -229,6 +229,27 @@
             </div>
         </div>
 
+        <!-- M-Pesa Payment Modal -->
+        <div id="mpesa-modal" class="modal">
+            <div class="modal-content mpesa-content">
+                <div class="mpesa-logo-text">M-PESA</div>
+                <div id="mpesa-form-section">
+                    <p class="payment-prompt">Amount due: <strong>KES <span id="mpesa-amount">0</span></strong></p>
+                    <div class="input-group" style="text-align: left;">
+                        <label for="mpesa-phone">Safaricom Phone Number</label>
+                        <input type="tel" id="mpesa-phone" placeholder="07XX XXX XXX" value="0712345678">
+                    </div>
+                    <button id="mpesa-pay-btn" class="btn-mpesa">Pay Now</button>
+                    <button id="mpesa-cancel-btn" class="btn-cancel">Cancel</button>
+                </div>
+                <div id="mpesa-processing-section" style="display: none;">
+                    <div class="loader"></div>
+                    <h3 style="margin-top: 1.5rem; color: var(--secondary-color);">Waiting for Payment</h3>
+                    <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">Check your phone and enter your M-PESA PIN to confirm the payment.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Payment Modal -->
         <div id="payment-modal" class="modal">
             <div class="modal-content">

@@ -4,6 +4,10 @@ const signupScreen = document.getElementById('signup-screen');
 const studentMenu = document.getElementById('student-menu');
 const kitchenDashboard = document.getElementById('kitchen-dashboard');
 const paymentModal = document.getElementById('payment-modal');
+const mpesaModal = document.getElementById('mpesa-modal');
+const mpesaAmount = document.getElementById('mpesa-amount');
+const mpesaFormSection = document.getElementById('mpesa-form-section');
+const mpesaProcessingSection = document.getElementById('mpesa-processing-section');
 
 // --- Auth Logic ---
 
@@ -73,21 +77,49 @@ document.getElementById('checkout-btn').addEventListener('click', () => {
         return;
     }
 
-    // Show modal
-    paymentModal.style.display = 'flex';
+    // Set amount and show M-Pesa modal
+    mpesaAmount.innerText = cartTotal;
+    mpesaFormSection.style.display = 'block';
+    mpesaProcessingSection.style.display = 'none';
+    mpesaModal.style.display = 'flex';
+});
 
-    // Simulate processing delay, then go to Kitchen Dashboard
+document.getElementById('mpesa-cancel-btn').addEventListener('click', () => {
+    mpesaModal.style.display = 'none';
+});
+
+document.getElementById('mpesa-pay-btn').addEventListener('click', () => {
+    const phone = document.getElementById('mpesa-phone').value;
+    if(!phone) {
+        alert("Please enter your M-Pesa phone number");
+        return;
+    }
+
+    // Show processing (simulating STK push)
+    mpesaFormSection.style.display = 'none';
+    mpesaProcessingSection.style.display = 'block';
+
+    // Simulate STK Push delay (user entering PIN on phone)
     setTimeout(() => {
-        paymentModal.style.display = 'none';
-        studentMenu.style.display = 'none';
-        kitchenDashboard.style.display = 'flex';
+        mpesaModal.style.display = 'none';
         
-        // Reset cart for next time
-        cartTotal = 0;
-        cartItemsCount = 0;
-        document.getElementById('cart-total-amount').innerText = cartTotal;
-        document.getElementById('cart-badge').innerText = cartItemsCount;
-    }, 2000);
+        // Show success modal
+        paymentModal.style.display = 'flex';
+
+        // Wait, then go to kitchen dashboard
+        setTimeout(() => {
+            paymentModal.style.display = 'none';
+            studentMenu.style.display = 'none';
+            kitchenDashboard.style.display = 'flex';
+            
+            // Reset cart
+            cartTotal = 0;
+            cartItemsCount = 0;
+            document.getElementById('cart-total-amount').innerText = cartTotal;
+            document.getElementById('cart-badge').innerText = cartItemsCount;
+        }, 2000);
+
+    }, 4000); // 4 seconds simulated delay
 });
 
 // --- Kitchen Dashboard Logic ---
