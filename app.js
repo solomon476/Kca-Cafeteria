@@ -6,8 +6,22 @@ const kitchenDashboard = document.getElementById('kitchen-dashboard');
 const paymentModal = document.getElementById('payment-modal');
 
 // --- Auth Logic ---
+
+function updateGreeting(nameInput) {
+    const greetingEl = document.getElementById('user-greeting-name');
+    if (nameInput && nameInput.trim() !== '') {
+        let name = nameInput.trim();
+        if(name.includes('/')) name = 'Student'; // fallback if they type a real ID
+        greetingEl.innerText = name.charAt(0).toUpperCase() + name.slice(1);
+    } else {
+        greetingEl.innerText = 'Student';
+    }
+}
+
 document.getElementById('login-btn').addEventListener('click', () => {
     // Basic transition for prototype
+    const studentIdInput = document.getElementById('student-id').value;
+    updateGreeting(studentIdInput);
     loginScreen.style.display = 'none';
     studentMenu.style.display = 'flex';
 });
@@ -26,6 +40,8 @@ document.getElementById('back-to-login-link').addEventListener('click', (e) => {
 
 document.getElementById('create-account-btn').addEventListener('click', () => {
     // Basic transition for prototype
+    const signupName = document.getElementById('signup-name').value;
+    updateGreeting(signupName);
     signupScreen.style.display = 'none';
     studentMenu.style.display = 'flex';
 });

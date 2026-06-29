@@ -192,6 +192,29 @@ body {
     border-radius: 10px;
 }
 
+/* ==================================
+   WELCOME BANNER
+   ================================== */
+.welcome-banner {
+    padding: 1.5rem 1.5rem 0.5rem;
+    background: linear-gradient(135deg, var(--bg-color) 0%, #fae8dc 100%);
+    border-bottom: 1px solid #fae8dc;
+    margin-bottom: 0.5rem;
+    animation: fadeIn 0.5s ease;
+}
+
+.welcome-banner h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.3rem;
+    font-weight: 700;
+}
+
+.welcome-banner p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
 .categories-scroll {
     display: flex;
     gap: 0.8rem;
