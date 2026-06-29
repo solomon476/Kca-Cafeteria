@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #FF5A5F; /* Vibrant modern coral/red */
-    --secondary-color: #2D3142; /* Deep navy blue for high contrast text */
-    --bg-color: #F8F9FA; /* Cleaner modern off-white */
+    --primary-color: #D2691E; /* Burnt Orange / Terracotta */
+    --secondary-color: #8B4513; /* Warm Brown */
+    --bg-color: #FDFBF7; /* Off-white / Light Beige */
     --text-color: #333333;
     --text-light: #888888;
     --white: #FFFFFF;
@@ -217,17 +217,13 @@ body {
    WELCOME BANNER
    ================================== */
 .welcome-banner {
-    padding: 1.8rem 1.5rem;
-    background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
-    border-radius: var(--border-radius);
-    margin: 0.5rem 1.5rem 1.5rem; /* Detached floating card */
-    box-shadow: 0 10px 25px rgba(255, 152, 0, 0.25);
+    padding: 1.5rem 1.5rem 0.5rem;
+    background: linear-gradient(135deg, var(--bg-color) 0%, #fae8dc 100%);
     animation: fadeIn 0.5s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
-    color: var(--white);
 }
 
 .welcome-content {
@@ -236,13 +232,13 @@ body {
 
 .welcome-banner h3 {
     font-size: 1.5rem;
-    color: var(--white);
+    color: var(--primary-color);
     margin-bottom: 0.3rem;
     font-weight: 700;
 }
 
 .welcome-banner p {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-light);
     font-size: 0.95rem;
 }
 
