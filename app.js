@@ -91,11 +91,22 @@ document.getElementById('logout-btn').addEventListener('click', () => {
     loginScreen.style.display = 'flex';
 });
 
-// Category pills logic (visual only for prototype)
+// Category pills logic
 const pills = document.querySelectorAll('.pill');
+const foodCards = document.querySelectorAll('.food-card');
+
 pills.forEach(pill => {
     pill.addEventListener('click', () => {
         pills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
+        
+        const filter = pill.getAttribute('data-filter');
+        foodCards.forEach(card => {
+            if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     });
 });

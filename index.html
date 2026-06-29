@@ -41,15 +41,15 @@
             </header>
             
             <div class="categories-scroll">
-                <button class="pill active">All</button>
-                <button class="pill">Breakfast</button>
-                <button class="pill">Lunch</button>
-                <button class="pill">Drinks</button>
+                <button class="pill active" data-filter="all">All</button>
+                <button class="pill" data-filter="breakfast">Breakfast</button>
+                <button class="pill" data-filter="lunch">Lunch</button>
+                <button class="pill" data-filter="drinks">Drinks</button>
             </div>
 
             <div class="food-grid">
                 <!-- Card 1 -->
-                <div class="food-card">
+                <div class="food-card" data-category="lunch">
                     <img src="images/chicken_and_rice.png" alt="Chicken & Rice" class="food-img">
                     <div class="food-info">
                         <h3>Chicken & Rice</h3>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <!-- Card 2 -->
-                <div class="food-card">
+                <div class="food-card" data-category="drinks">
                     <img src="images/fresh_juice.png" alt="Fresh Juice" class="food-img">
                     <div class="food-info">
                         <h3>Fresh Juice</h3>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <!-- Card 3 -->
-                <div class="food-card">
+                <div class="food-card" data-category="lunch">
                     <div class="food-img placeholder-img">🍔</div>
                     <div class="food-info">
                         <h3>Beef Burger</h3>
@@ -76,12 +76,48 @@
                     </div>
                 </div>
                 <!-- Card 4 -->
-                <div class="food-card">
+                <div class="food-card" data-category="drinks">
                     <div class="food-img placeholder-img">☕</div>
                     <div class="food-info">
                         <h3>Coffee</h3>
                         <p class="price">KES 50</p>
                         <button class="btn-add" onclick="addToCart(50)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="food-card" data-category="breakfast">
+                    <div class="food-img placeholder-img">🥞</div>
+                    <div class="food-info">
+                        <h3>Pancakes</h3>
+                        <p class="price">KES 100</p>
+                        <button class="btn-add" onclick="addToCart(100)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 6 -->
+                <div class="food-card" data-category="lunch">
+                    <div class="food-img placeholder-img">🍟</div>
+                    <div class="food-info">
+                        <h3>Fries</h3>
+                        <p class="price">KES 120</p>
+                        <button class="btn-add" onclick="addToCart(120)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 7 -->
+                <div class="food-card" data-category="breakfast">
+                    <div class="food-img placeholder-img">🍳</div>
+                    <div class="food-info">
+                        <h3>Eggs & Toast</h3>
+                        <p class="price">KES 150</p>
+                        <button class="btn-add" onclick="addToCart(150)">+ Add</button>
+                    </div>
+                </div>
+                <!-- Card 8 -->
+                <div class="food-card" data-category="drinks">
+                    <div class="food-img placeholder-img">🥤</div>
+                    <div class="food-info">
+                        <h3>Soda</h3>
+                        <p class="price">KES 60</p>
+                        <button class="btn-add" onclick="addToCart(60)">+ Add</button>
                     </div>
                 </div>
             </div>
