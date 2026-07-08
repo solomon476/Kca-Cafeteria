@@ -18,7 +18,7 @@ app.get('/api/status', (req, res) => {
 });
 
 // Fallback to index.html for any other GET requests
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
