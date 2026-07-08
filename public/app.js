@@ -12,13 +12,12 @@ const mpesaProcessingSection = document.getElementById('mpesa-processing-section
 // --- Auth Logic ---
 
 let currentStudentName = 'Student';
+let authToken = localStorage.getItem('kca_token');
 
 function updateGreeting(nameInput) {
     const greetingEl = document.getElementById('user-greeting-name');
     if (nameInput && nameInput.trim() !== '') {
-        let name = nameInput.trim();
-        if (name.includes('/')) name = 'Student'; // fallback if they type a real ID
-        currentStudentName = name.charAt(0).toUpperCase() + name.slice(1);
+        currentStudentName = nameInput;
         greetingEl.innerText = currentStudentName;
     } else {
         currentStudentName = 'Student';
@@ -26,11 +25,58 @@ function updateGreeting(nameInput) {
     }
 }
 
-document.getElementById('login-btn').addEventListener('click', () => {
+// Auto-login if token exists
+async function checkAuthOnLoad() {
+    if (!authToken) return;
+    try {
+        const res = await fetch('/api/me', {
+            headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        if (res.ok) {
+            const data = await res.json();
+            updateGreeting(data.name);
+            loginScreen.style.display = 'none';
+            studentMenu.style.display = 'flex';
+        } else {
+            // Token invalid or expired
+            localStorage.removeItem('kca_token');
+            authToken = null;
+        }
+    } catch (err) {
+        console.error("Auth check failed:", err);
+    }
+}
+checkAuthOnLoad();
+
+document.getElementById('login-btn').addEventListener('click', async () => {
     const studentIdInput = document.getElementById('student-id').value;
-    updateGreeting(studentIdInput);
-    loginScreen.style.display = 'none';
-    studentMenu.style.display = 'flex';
+    const passwordInput = document.getElementById('password').value;
+    
+    if (!studentIdInput || !passwordInput) {
+        alert("Please enter Student ID and Password");
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ studentId: studentIdInput, password: passwordInput })
+        });
+        const data = await res.json();
+        
+        if (res.ok) {
+            localStorage.setItem('kca_token', data.token);
+            authToken = data.token;
+            updateGreeting(data.name);
+            loginScreen.style.display = 'none';
+            studentMenu.style.display = 'flex';
+        } else {
+            alert(data.error || "Login failed");
+        }
+    } catch (err) {
+        alert("An error occurred during login.");
+    }
 });
 
 document.getElementById('signup-link').addEventListener('click', (e) => {
@@ -45,11 +91,35 @@ document.getElementById('back-to-login-link').addEventListener('click', (e) => {
     loginScreen.style.display = 'flex';
 });
 
-document.getElementById('create-account-btn').addEventListener('click', () => {
+document.getElementById('create-account-btn').addEventListener('click', async () => {
     const signupName = document.getElementById('signup-name').value;
-    updateGreeting(signupName);
-    signupScreen.style.display = 'none';
-    studentMenu.style.display = 'flex';
+    const signupId = document.getElementById('signup-id').value;
+    const signupPassword = document.getElementById('signup-password').value;
+    
+    if (!signupName || !signupId || !signupPassword) {
+        alert("Please fill in all fields");
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: signupName, studentId: signupId, password: signupPassword })
+        });
+        const data = await res.json();
+        
+        if (res.ok) {
+            alert("Account created successfully! Please log in.");
+            signupScreen.style.display = 'none';
+            loginScreen.style.display = 'flex';
+            document.getElementById('student-id').value = signupId;
+        } else {
+            alert(data.error || "Sign up failed");
+        }
+    } catch (err) {
+        alert("An error occurred during sign up.");
+    }
 });
 
 // --- Cart Logic ---
@@ -287,6 +357,8 @@ function toggleOrderStatus(btn) {
 
 // Logout
 document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.removeItem('kca_token');
+    authToken = null;
     kitchenDashboard.style.display = 'none';
     loginScreen.style.display = 'flex';
 });
