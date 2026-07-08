@@ -71,7 +71,12 @@
                     <p>What are you craving today?</p>
                 </div>
                 <div class="welcome-mascot">
-                    <img src="images/welcome_mascot.png" alt="Welcome Mascot" class="mascot-img" onerror="this.style.display='none'">
+                    <!-- Real chef photo -->
+                    <img 
+                        src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=200&h=200&q=80" 
+                        alt="Chef" 
+                        class="mascot-img chef-photo"
+                    >
                 </div>
             </div>
 
@@ -86,9 +91,9 @@
             <div class="food-grid">
                 <!-- Card 1 -->
                 <div class="food-card" data-category="lunch">
-                    <img src="images/chicken_and_rice.png" alt="Chicken & Rice" class="food-img">
+                    <img src="images/chicken_and_rice.png" alt="Chicken &amp; Rice" class="food-img">
                     <div class="food-info">
-                        <h3>Chicken & Rice</h3>
+                        <h3>Chicken &amp; Rice</h3>
                         <p class="price">KES 150</p>
                         <button class="btn-add" onclick="addToCart('Chicken & Rice', 150)">+ Add</button>
                     </div>
@@ -140,9 +145,9 @@
                 </div>
                 <!-- Card 7 -->
                 <div class="food-card" data-category="breakfast">
-                    <img src="images/eggs_toast.png" alt="Eggs & Toast" class="food-img">
+                    <img src="images/eggs_toast.png" alt="Eggs &amp; Toast" class="food-img">
                     <div class="food-info">
-                        <h3>Eggs & Toast</h3>
+                        <h3>Eggs &amp; Toast</h3>
                         <p class="price">KES 150</p>
                         <button class="btn-add" onclick="addToCart('Eggs & Toast', 150)">+ Add</button>
                     </div>
@@ -203,7 +208,7 @@
                 </div>
                 <!-- Card 14 -->
                 <div class="food-card" data-category="fruits">
-                    <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=60" alt="Fruit Juice" class="food-img">
+                    <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=500&q=60" alt="Fruit Juice" class="food-img">
                     <div class="food-info">
                         <h3>Fruit Juice</h3>
                         <p class="price">KES 80</p>
@@ -212,9 +217,12 @@
                 </div>
             </div>
 
-            <div class="sticky-cart">
-                <div class="cart-total">Total: KES <span id="cart-total-amount">0</span></div>
-                <button id="checkout-btn" class="btn-primary">Checkout & Pay</button>
+            <div class="sticky-cart" id="sticky-cart-bar">
+                <div class="cart-summary">
+                    <div class="cart-total">Total: KES <span id="cart-total-amount">0</span></div>
+                    <div class="cart-items-label"><span id="cart-items-count-label">0</span> item(s) in cart</div>
+                </div>
+                <button id="checkout-btn" class="btn-primary">Checkout &amp; Pay</button>
             </div>
         </div>
 
@@ -229,47 +237,97 @@
                 <h3 style="color: var(--primary-color);">Live Orders</h3>
             </div>
 
-            <!-- Live Orders Section -->
+            <!-- Live Orders Section - populated dynamically from student's order -->
             <div id="live-orders-section" class="dashboard-section">
-                <div class="order-card">
-                    <div class="order-header">
-                        <h4>Order #1042</h4>
-                        <span class="customer-name">John D.</span>
-                    </div>
-                    <p class="order-details">2x Chicken & Rice, 1x Fresh Juice</p>
-                    <button class="btn-status status-preparing" onclick="toggleOrderStatus(this)">Preparing</button>
-                </div>
-                <div class="order-card">
-                    <div class="order-header">
-                        <h4>Order #1043</h4>
-                        <span class="customer-name">Sarah M.</span>
-                    </div>
-                    <p class="order-details">1x Beef Burger, 1x Coffee</p>
-                    <button class="btn-status status-preparing" onclick="toggleOrderStatus(this)">Preparing</button>
+                <!-- Orders will be injected here by app.js -->
+                <div id="no-orders-msg" class="no-orders-msg" style="display:none;">
+                    <span>🍽️</span>
+                    <p>No active orders right now.</p>
                 </div>
             </div>
 
 
         </div>
 
-        <!-- M-Pesa Payment Modal -->
+        <!-- Payment Modal -->
         <div id="mpesa-modal" class="modal">
-            <div class="modal-content mpesa-content">
-                <div class="mpesa-logo-text">M-PESA</div>
+            <div class="modal-content payment-content">
+
+                <!-- Amount header -->
+                <p class="payment-prompt">Amount due: <strong>KES <span id="mpesa-amount">0</span></strong></p>
+
+                <!-- Payment method tabs -->
+                <div class="pay-tabs">
+                    <button class="pay-tab active" data-method="mpesa" onclick="switchPayTab(this, 'mpesa-panel')">M-Pesa</button>
+                    <button class="pay-tab" data-method="airtel" onclick="switchPayTab(this, 'airtel-panel')">Airtel Money</button>
+                    <button class="pay-tab" data-method="card" onclick="switchPayTab(this, 'card-panel')">Card</button>
+                    <button class="pay-tab" data-method="cash" onclick="switchPayTab(this, 'cash-panel')">Cash</button>
+                </div>
+
                 <div id="mpesa-form-section">
-                    <p class="payment-prompt">Amount due: <strong>KES <span id="mpesa-amount">0</span></strong></p>
-                    <div class="input-group" style="text-align: left;">
-                        <label for="mpesa-phone">Safaricom Phone Number</label>
-                        <input type="tel" id="mpesa-phone" placeholder="07XX XXX XXX" value="0712345678">
+                    <!-- M-Pesa Panel -->
+                    <div id="mpesa-panel" class="pay-panel">
+                        <div class="provider-badge mpesa-badge">M-PESA</div>
+                        <div class="input-group" style="text-align:left;">
+                            <label for="mpesa-phone">Safaricom Number</label>
+                            <div class="phone-input-wrap">
+                                <span class="phone-prefix">+254</span>
+                                <input type="tel" id="mpesa-phone" placeholder="" maxlength="9">
+                            </div>
+                        </div>
+                        <button id="mpesa-pay-btn" class="btn-mpesa">Send STK Push</button>
                     </div>
-                    <button id="mpesa-pay-btn" class="btn-mpesa">Pay Now</button>
+
+                    <!-- Airtel Money Panel -->
+                    <div id="airtel-panel" class="pay-panel" style="display:none;">
+                        <div class="provider-badge airtel-badge">Airtel Money</div>
+                        <div class="input-group" style="text-align:left;">
+                            <label for="airtel-phone">Airtel Number</label>
+                            <div class="phone-input-wrap">
+                                <span class="phone-prefix">+254</span>
+                                <input type="tel" id="airtel-phone" placeholder="" maxlength="9">
+                            </div>
+                        </div>
+                        <button id="airtel-pay-btn" class="btn-airtel">Pay with Airtel</button>
+                    </div>
+
+                    <!-- Card Panel -->
+                    <div id="card-panel" class="pay-panel" style="display:none;">
+                        <div class="provider-badge card-badge">💳 Card</div>
+                        <div class="input-group" style="text-align:left;">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 0.95rem;">
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <div class="input-group" style="text-align:left; flex: 1;">
+                                <label for="card-expiry">Expiry</label>
+                                <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 0.95rem;">
+                            </div>
+                            <div class="input-group" style="text-align:left; flex: 1;">
+                                <label for="card-cvv">CVV</label>
+                                <input type="password" id="card-cvv" placeholder="123" maxlength="3" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 0.95rem;">
+                            </div>
+                        </div>
+                        <button id="card-pay-btn" class="btn-card" style="margin-top: 1rem;">Pay KES <span class="cash-amount-ref"></span></button>
+                    </div>
+
+                    <!-- Cash Panel -->
+                    <div id="cash-panel" class="pay-panel" style="display:none;">
+                        <div class="provider-badge cash-badge">💵 Cash</div>
+                        <p class="cash-instructions">Pay <strong>KES <span class="cash-amount-ref"></span></strong> at the counter when collecting your order.</p>
+                        <button id="cash-confirm-btn" class="btn-cash">Confirm Cash Payment</button>
+                    </div>
+
                     <button id="mpesa-cancel-btn" class="btn-cancel">Cancel</button>
                 </div>
+
+                <!-- Processing spinner (shared) -->
                 <div id="mpesa-processing-section" style="display: none;">
                     <div class="loader"></div>
-                    <h3 style="margin-top: 1.5rem; color: var(--secondary-color);">Waiting for Payment</h3>
-                    <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">Check your phone and enter your M-PESA PIN to confirm the payment.</p>
+                    <h3 style="margin-top:1.5rem; color:var(--secondary-color);" id="processing-title">Processing Payment</h3>
+                    <p style="margin-top:0.5rem; color:var(--text-light); font-size:0.9rem;" id="processing-msg">Please wait...</p>
                 </div>
+
             </div>
         </div>
 

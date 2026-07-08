@@ -1,3 +1,16 @@
 {
-  "name": "kca-cafeteria"
+  "version": 2,
+  "name": "kca-cafeteria",
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/server.js"
+    }
+  ]
 }

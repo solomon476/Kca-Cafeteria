@@ -21,7 +21,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    overflow: hidden;
     color: var(--text-color);
 }
 
@@ -29,7 +31,7 @@ body {
     background-color: var(--bg-color);
     width: 100%;
     max-width: 400px;
-    height: 100vh;
+    height: 100%;
     max-height: 850px;
     overflow: hidden; /* Hide outer scroll, handle internally on mobile */
     position: relative;
@@ -43,6 +45,9 @@ body {
     body {
         align-items: flex-start; /* Allow normal scrolling from top */
         padding: 2rem 0;
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
     }
     #app-container {
         max-width: 800px;
@@ -243,10 +248,25 @@ body {
 }
 
 .welcome-mascot {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
     margin-left: 1rem;
     flex-shrink: 0;
+}
+
+.chef-photo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 4px 16px rgba(210, 105, 30, 0.35);
+    animation: chefFloat 3s ease-in-out infinite;
+}
+
+@keyframes chefFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
 }
 
 .mascot-img {
@@ -296,7 +316,7 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    padding: 0 1.5rem 8rem; /* Increased bottom padding for sticky cart */
+    padding: 0.5rem 1.5rem 1rem;
     overflow-y: auto;
     flex-grow: 1;
 }
@@ -371,20 +391,26 @@ body {
 }
 
 .sticky-cart {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    /* Always visible at bottom — flex child, not absolutely positioned */
+    flex-shrink: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    padding: 1.2rem 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 -10px 40px rgba(0,0,0,0.08);
+    padding: 1rem 1.5rem;
+    border-top: 2px solid rgba(210, 105, 30, 0.2);
+    box-shadow: 0 -6px 24px rgba(0,0,0,0.08);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 20;
+    gap: 1rem;
+}
+
+.cart-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
 }
 
 .cart-total {
@@ -393,9 +419,18 @@ body {
     color: var(--secondary-color);
 }
 
+.cart-items-label {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
 .sticky-cart .btn-primary {
     width: auto;
-    padding: 0.8rem 1.5rem;
+    padding: 0.85rem 1.4rem;
+    flex-shrink: 0;
+    font-size: 0.95rem;
+    white-space: nowrap;
 }
 
 /* ==================================
@@ -488,6 +523,23 @@ body {
 .status-ready {
     background-color: #e6f7eb;
     color: #2e8b57;
+}
+
+.no-orders-msg {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+}
+
+.no-orders-msg span {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.no-orders-msg p {
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .inventory-table {
@@ -638,24 +690,142 @@ body {
 }
 
 /* ==================================
-   M-PESA MODAL
+   PAYMENT MODAL
    ================================== */
-.mpesa-content {
-    border-top: 6px solid #52B44B;
-}
-
-.mpesa-logo-text {
-    color: #52B44B;
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
+.payment-content {
+    border-top: 6px solid var(--primary-color);
+    padding: 1.5rem;
+    text-align: left;
 }
 
 .payment-prompt {
     font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--secondary-color);
+    text-align: center;
+}
+
+/* Payment method tabs */
+.pay-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    background: #f5f0ec;
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.pay-tab {
+    flex: 1;
+    padding: 0.55rem 0.4rem;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.pay-tab.active {
+    background: var(--white);
+    color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Provider badges */
+.provider-badge {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.mpesa-badge {
+    background: #e8f7e6;
+    color: #52B44B;
+}
+
+.airtel-badge {
+    background: #fff0e6;
+    color: #e8620a;
+}
+
+.cash-badge {
+    background: #f5f0e0;
+    color: #8B6914;
+    font-size: 1rem;
+}
+
+.card-badge {
+    background: #e6f0ff;
+    color: #0056b3;
+    font-size: 1rem;
+}
+
+/* Phone input with +254 prefix */
+.phone-input-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.phone-input-wrap:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(210, 105, 30, 0.1);
+}
+
+.phone-prefix {
+    background: #f5f0ec;
+    color: var(--secondary-color);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.8rem 0.75rem;
+    border-right: 1px solid #ddd;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.phone-input-wrap input {
+    flex: 1;
+    border: none;
+    padding: 0.8rem 0.75rem;
+    font-size: 0.95rem;
+    outline: none;
+    background: transparent;
+    min-width: 0;
+}
+
+.input-hint {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+/* Cash panel */
+.cash-instructions {
+    font-size: 1rem;
+    color: var(--text-color);
+    text-align: center;
+    margin: 1rem 0 1.5rem;
+    line-height: 1.6;
+    padding: 1rem;
+    background: #fdf8ed;
+    border-radius: 10px;
+    border: 1px dashed #c9a84c;
+}
+
+.pay-panel {
+    margin-bottom: 0.5rem;
 }
 
 .btn-mpesa {
@@ -677,7 +847,66 @@ body {
     transform: translateY(-2px);
 }
 
+.btn-airtel {
+    width: 100%;
+    padding: 1rem;
+    background-color: #e8620a;
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 0.8rem;
+}
+
+.btn-airtel:hover {
+    background-color: #c4520a;
+    transform: translateY(-2px);
+}
+
+.btn-cash {
+    width: 100%;
+    padding: 1rem;
+    background-color: #8B6914;
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 0.8rem;
+}
+
+.btn-cash:hover {
+    background-color: #6b5010;
+    transform: translateY(-2px);
+}
+
+.btn-card {
+    width: 100%;
+    padding: 1rem;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 0.8rem;
+}
+
+.btn-card:hover {
+    background-color: #003d82;
+    transform: translateY(-2px);
+}
+
 .btn-cancel {
+    display: block;
+    width: 100%;
     background: none;
     border: none;
     color: var(--text-light);
@@ -685,6 +914,9 @@ body {
     cursor: pointer;
     font-size: 0.95rem;
     transition: var(--transition);
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 0.3rem;
 }
 
 .btn-cancel:hover {
@@ -710,8 +942,8 @@ body {
 @media (min-width: 768px) {
     .food-grid {
         grid-template-columns: repeat(3, 1fr);
-        padding: 0 2rem 6rem;
-        overflow-y: visible; /* scroll naturally with the page */
+        padding: 0 2rem 1rem;
+        overflow-y: visible;
     }
     
     .app-header {
@@ -724,19 +956,16 @@ body {
     }
 
     .sticky-cart {
-        position: sticky;
-        bottom: 2rem;
-        margin: 0 2rem;
+        margin: 0 2rem 2rem;
         width: calc(100% - 4rem);
         border-radius: 12px;
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
     }
 }
 
 @media (min-width: 1024px) {
     .food-grid {
         grid-template-columns: repeat(4, 1fr);
-        padding: 0 3rem 6rem;
+        padding: 0 3rem 1rem;
     }
     
     .app-header {
