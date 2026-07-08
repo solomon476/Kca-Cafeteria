@@ -25,6 +25,18 @@ function updateGreeting(nameInput) {
     }
 }
 
+// Password visibility toggle
+function togglePassword(inputId, iconEl) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        iconEl.innerText = '🙈';
+    } else {
+        input.type = 'password';
+        iconEl.innerText = '👁️';
+    }
+}
+
 // Auto-login if token exists
 async function checkAuthOnLoad() {
     if (!authToken) return;

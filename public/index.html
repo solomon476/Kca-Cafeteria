@@ -23,7 +23,10 @@
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="••••••••">
+                    <div class="password-wrapper" style="position: relative;">
+                        <input type="password" id="password" placeholder="••••••••" style="width: 100%;">
+                        <span class="password-toggle" onclick="togglePassword('password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; user-select: none;">👁️</span>
+                    </div>
                 </div>
                 <button id="login-btn" class="btn-primary">Login</button>
                 <p class="signup-link">Don't have an account? <a href="#" id="signup-link">Sign up</a></p>
@@ -47,7 +50,10 @@
                 </div>
                 <div class="input-group">
                     <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" placeholder="••••••••">
+                    <div class="password-wrapper" style="position: relative;">
+                        <input type="password" id="signup-password" placeholder="••••••••" style="width: 100%;">
+                        <span class="password-toggle" onclick="togglePassword('signup-password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; user-select: none;">👁️</span>
+                    </div>
                 </div>
                 <button id="create-account-btn" class="btn-primary">Sign Up</button>
                 <p class="signup-link">Already have an account? <a href="#" id="back-to-login-link">Log in</a></p>
