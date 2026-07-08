@@ -30,10 +30,8 @@ function togglePassword(inputId, iconEl) {
     const input = document.getElementById(inputId);
     if (input.type === 'password') {
         input.type = 'text';
-        iconEl.innerText = '🙈';
     } else {
         input.type = 'password';
-        iconEl.innerText = '👁️';
     }
 }
 
